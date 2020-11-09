@@ -1,51 +1,66 @@
-var budgetController = (function() {
+var budgetController = (function(){
     
-})() ;
+    
+
+})();
 
 var UIController = (function() {
 
-    var DOMstrings = {
+    var DOMStrings = {
         inputType: '.add__type',
         inputDescription: '.add__description',
         inputValue: '.add__value',
-        inputBtn: '.add__btn'
+        inputBtn: '.add__btn',
     }
 
+
     return {
-        getinput: function() {
+        getInput: function() {
             return {
-                type: document.querySelector(DOMstrings.inputType).value,
-                description: document.querySelector(DOMstrings.inputDescription).value,
-                value: document.querySelector(DOMstrings.inputValue).value
+                type: document.querySelector(DOMStrings.inputType).value,
+                description: document.querySelector(DOMStrings.inputDescription).value,
+                value: document.querySelector(DOMStrings.inputValue).value
             };
         },
         getDOMstrings: function() {
-            return DOMstrings;
+            return DOMStrings
         }
     }
 })();
 
-var controller = (function(budgetCtrl,UICtrl) {
+var controller = (function(budgetCtrl, UICtrl) {
 
-    var DOM = UICtrl.getDOMstrings();
+
+    var setupEventListeners = function(){
+        var DOM = UIController.getDOMstrings();
+
+        document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem);
+    
+        document.addEventListener('keypress', function(e) {
+        
+            if(e.keyCode === 13 || e.which === 13) {
+                ctrlAddItem();
+        
+            }
+        });
+    };
+
     var ctrlAddItem = function() {
-        //Get the field input data
-        var input = UICtrl.getinput();
-        console.log(input)
+        // Get the filled input data
+            var input = UIController.getInput();
 
         //add item to budget controller
-        //add item to ui
-        //calculate the budget
-        //display the budget
-
-    }
-    document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem)
-
-
-    document.addEventListener('keypress', function(event) {
-        if(event.keyCode === 13)
-        ctrlAddItem();
-    })
+        //add item to UI
+        //Calculate budget
+        //display budget
+        
+    };
+    return {
+        init: function() {
+            console.log("Application Started")
+            setupEventListeners();
+        }
+    };
 })(budgetController,UIController);
 
-
+controller.init();
